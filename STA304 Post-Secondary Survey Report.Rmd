@@ -8,11 +8,7 @@ editor: visual
 
 ```{r, include = FALSE}
 
-# Here you can load in and clean the data (you may need to do the cleaning in a separate R script - this is up to you). 
 library(tidyverse)
-
-
-# You may need additional chunks, in case you want to include some of the cleaning output.
 
 ```
 
@@ -86,11 +82,7 @@ In this section we will simulate data to mimic responses to the previously menti
 
 ```{r, include = FALSE}
 
-# Here you can simulate and clean the data. 
-
-# You may need additional chunks, in case you want to include some of the cleaning output. 
-
-# I have included some example code below, but it should be changed, as it is likely not relevant and doesn't really appropriately simulate heights.
+#simulating data
 
 set.seed(500)
 
@@ -116,6 +108,8 @@ The data shown in this graph is simply the simulated responses, and nothing furt
 
 ```{r, include = FALSE}
 
+#cleaning simulated data
+
 sim_data_clean <- c()
 for (i in seq_along(sim_data)) {
   if (sim_data[i] %in% c(1, 2)) {sim_data_clean[i] <- 0}
@@ -131,6 +125,8 @@ finaid
 ```
 
 ```{r, echo = FALSE}
+
+#creating barplot
 
 library(ggplot2)
 
@@ -156,13 +152,15 @@ I will use my simulated sample to create a 95% confidence interval for the propo
 
 $$\hat{p} \pm \ z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$$
 
-Since $$\hat{p} *n = 617.54$$ and $$(\hat{p} - 1)*n = 184.46$$ are both sufficiently large we can assume normality. Since our sample was a randomly simulaed we can assume randomness and independence \[6\].
+Since $$\hat{p} *n = 617.54$$ and $$(1 - \hat{p})*n = 184.46$$
+
+are both sufficiently large we can assume normality. Since our sample was a randomly simulated we can assume randomness and independence \[6\].
 
 # 6 Results
 
 ```{r, include = FALSE}
 
-# Here you can derive the CIs of interest based off the simulated data in a previous chunk.
+#creating confidence intervals for frequency of responses
 
 upper_bound <- 0.77 + 1.96*sqrt((0.77*0.33)/802)
 
@@ -172,7 +170,7 @@ c(upper_bound, lower_bound)
 ```
 
 |   | 95% Confidence Interval of Frequency of Response 3, 4, and 5 |
-|----|----|
+|------------------------------------|------------------------------------|
 | On a scale of 1-5, how much of your child's post secondary costs do you expect to pay using loans, scholarships, bursaries, grants, and other forms of financial aid? | (0.735, 0.804) |
 
 : We are 95% confident that the true proportion of responses 3, 4, and 5 lies in the interval (0.804, 0.735). This is reasonable considering we simulated our data from a model where the total probability of these responses was 75.2, which lies in this interval \[6\].
