@@ -1,0 +1,240 @@
+---
+title: "Post-Secondary Preparation Survey Report - Understanding Financial Aids Needs"
+author: "Rosie Topp"
+subtitle: "STA304 - Fall 2025 - Assignment 1"
+format: pdf
+editor: visual
+---
+
+```{r, include = FALSE}
+
+# Here you can load in and clean the data (you may need to do the cleaning in a separate R script - this is up to you). 
+library(tidyverse)
+
+
+# You may need additional chunks, in case you want to include some of the cleaning output.
+
+```
+
+# 1 Introduction
+
+The goal of this report is to go through my *Post-Secondary Preparation Survey* and some simulated findings. The survey focuses on gauging how accessible financial aid resources are to parents and guardians preparing their children for post-secondary education \[1\]. The main variable that will be focused on is how much parents expect to use various forms of financial aid to pay for their child's education and related costs. This project is in partnership with STEMBuddies, a nonprofit organization that provides resources to help students navigate high school and their transitions to further education. They are creating a free handbook for secondary school students perusing STEM to use with the goal of answering any questions they might have about their education \[2\]\[3\]. I hope to help them assess the needs of their population in order to make their resource as comprehensive as possible.
+
+# 2 Survey Showcasing
+
+## 2.1 Survey Description
+
+[*Post-Secondary Preparation Survey*](https://forms.gle/GaJrDoDybm4cmcai7)
+
+This survey aims to collect information on the importance and availability of grants, bursaries, loans, scholarships, and other forms of financial aid to parents and guardians preparing their children for post-secondary education.
+
+The questions are as follows:
+
+1.  **How many dependents are in your household?**
+
+    This question requires a short answer numerical response. It's purpose is to gauge how many children this household has to divide their income between. This is a demographic question.
+
+2.  **What was your total household income before taxes in 2024?**
+
+    This question requires a short answer numerical response. It's purpose is to figure out the economic status of the family. I could hypothetically disaggregate the data with this variable. This is a demographic question.
+
+3.  **On a scale of 1-5, how much of your child's post secondary costs do you expect to pay using loans, scholarships, bursaries, grants, and other forms of financial aid?**
+
+    This question requires a response on a scale of 1-5, 1 being "None of it" and 5 being "All of it". This is the question I will be focusing on in this report. This is a demographic as well as a needs assessment question.
+
+4.  **On a scale of 1-5, how well do you understand the process to apply for and receive loans, scholarships, bursaries, grants, and other forms of financial aid?**
+
+    This question requires a response on a scale of 1-5, 1 being "I don't understand at all" and 5 being "I understand completely". It's purpose is to estimate how much our population already knows about accessing financial aid. I used a linear scale for this question as many respondents may have various levels of understanding that a binary response would not capture. This is a needs assessment question.
+
+5.  **What questions do you have, if any, about the process of accessing loans, scholarships, bursaries, grants, and other forms of financial aid?**
+
+    This question has an open answer response. Its purpose is so respondents can give more direct feedback about what exactly they find unclear about accessing financial aid. Although the data from this response format would be more difficult to parse, I feel this is the best way for STEMBuddies to find out how to convey information about this topic.
+
+## 2.2 Testing My Survey
+
+I asked a small group of friends and family to fill out this survey, including parents who had been through the process of transitioning a child to post secondary.
+
+## 2.3 Showcasing Relevant Question(s)
+
+**On a scale of 1-5, how much of your child's post secondary costs do you expect to pay using loans, scholarships, bursaries, grants, and other forms of financial aid?**
+
+I will focus on the above question for the rest of this report. Its purpose is to gauge how much the parents of students transitioning into high school plan to rely on financial aid. This topic is a large piece of what we are trying to assess: *how important are financial aid resources to our population*.
+
+This question requires a response on a scale of 1-5, 1 being "None of it" and 5 being "All of it". This kind of scale is easy for respondents to understand; there are distinct answers on either end, and a clear halfway point. That being said, this format does not allow us to gather more specific information about exactly how much these parents plan to use financial aid in dollars. I decided that ease of comprehension was more important than specificity. Those filling out the survey likely do not want to spend the time calculating an exact dollar amount, and might either refrain from answering, or might give an inaccurate response which could introduce bias into our results. I would also then have to add another question about the child's overall post secondary costs in order to calculate a percentage. Questions surrounding finances are often very sensitive. Respondents may not want to answer specific questions on this subject, and having to share dollar amounts might be stressful. Additionally, for the purposes of the STEMBuddies handbook, subjective needs may even be more important than objective ones. For these reasons we were unable to collect more specific data. Financial aid still may be a sensitive topic for those in our sample, however questions like this are essential to finding out how we can help those in need.
+
+# 3 Procedure
+
+## 3.1 Proposed Sampling Procedure
+
+**Target population**: Canadian parents and guardians with at least one child transitioning from secondary to post-secondary school.
+
+**Frame population**: Parents and guardians of grade 12 students in 15 schools across Ontario.
+
+**Sample**: Those who see the email and decide to fill out the survey.
+
+This proposed frame population would make sense as it would be documented and easily accessible by the schools in question. The 15 schools would be randomly selected in order to mitigate bias and give every region an equal chance at being represented, instead of just collecting data from urban areas. The school could send out the survey via email on behalf of STEMBuddies. I believe it would be appropriate to send it to everyone in this sampling frame as many parents may not respond.
+
+One major drawback is that not every student is planning to attend post-secondary immediately or ever. The email could request that only those with children planning to enroll for the next school year respond. Another issue is that Ontario may not be representative of the entirety of Canada. Of course Ontario does not have to be the only province sampled, however sending the survey across the entire country would be unrealistic.
+
+## 3.2 Simulation
+
+In this section we will simulate data to mimic responses to the previously mentioned question. This simulated data will be categorical, with the categories being 1, 2, 3, 4, 5, where 1 indicates the respondent does not plan to use financial aid at all, and 5 being the respondent plans to use financial aid for all their costs. I will create this simulated random sample using the following parameters.
+
+**Sample size**: According to ontario.ca there were 189,018 grade 12 students in the province in the 2023-24 school year, and 883 secondary schools \[4\]. This gives us an average of about 214 12th grade students per school in Ontario. That would be 3,210 students across 15 schools (note: populations vary widely from school to school, so this is a very rough estimate.) Estimating that a quarter of these student's guardians would respond to the survey, we have decided that n=802.
+
+**Probabilities**: A 2023 survey from the Angus Reid Institute revealed that 1% of Canadians self reported as upper class, 17% upper middle class, 42% middle class, 17% lower middle class, and 6% lower class \[5\]. We are estimating that these percentages would correspond to the number of respondents in each category on our 1-5 scale. For reasons that the paper does not reveal, these percentages do not add up to 100 (perhaps some respondents did not answer this question). Evenly dividing up the remaining 17%, we get the probabilities (4.4, 20.4, 45.4, 20.4, 9.4) of answers being 1, 2, 3, 4, 5 respectively.
+
+```{r, include = FALSE}
+
+# Here you can simulate and clean the data. 
+
+# You may need additional chunks, in case you want to include some of the cleaning output. 
+
+# I have included some example code below, but it should be changed, as it is likely not relevant and doesn't really appropriately simulate heights.
+
+set.seed(500)
+
+probs <- c(4.4, 20.4, 45.4, 20.4, 9.4)
+
+sim_data <- sample(x= 1:5, size=802, prob = probs, replace=T)
+ones <- sum(sim_data == 1)
+twos <- sum(sim_data == 2)
+threes <- sum(sim_data == 3)
+fours <- sum(sim_data == 4)
+fives <- sum(sim_data == 5)
+
+c(ones, twos, threes, fours, fives)
+length(sim_data)
+
+```
+
+# 4 Data
+
+The following bar plot shows the frequency of each response option to the question "On a scale of 1-5, how much of your child's post secondary costs do you expect to pay using loans, scholarships, bursaries, grants, and other forms of financial aid?", where 1 indicates "none of it" and 5 indicates "all of it".
+
+The data shown in this graph is simply the simulated responses, and nothing further was done to it. That said, for the purposes of the next section, I have cleaned the data by mapping the responses 3, 4, and 5 to 1, and the rest to 0. This will show us the frequency of respondents predicting they will pay half or more of their costs with financial aid compared to those who say they will only use it for a little to none of the cost. This is the variable I will do a 95% confidence interval on.
+
+```{r, include = FALSE}
+
+sim_data_clean <- c()
+for (i in seq_along(sim_data)) {
+  if (sim_data[i] %in% c(1, 2)) {sim_data_clean[i] <- 0}
+  else {sim_data_clean[i] <- 1}
+}
+sim_data_clean = na.omit(sim_data_clean)
+sim_data_clean
+length <- length(sim_data_clean)
+finaid <- sum(sim_data_clean)
+finaid/length
+length
+finaid
+```
+
+```{r, echo = FALSE}
+
+library(ggplot2)
+
+df <- data.frame(sim_data)
+
+ggplot(df, aes(x = factor(sim_data))) +
+  geom_bar(fill = "cadetblue3", col="darkslategray") +
+  labs(title = "Figure 1: A bar plot displaying how much of their child's  post-secondary \n costs they expect to pay using financial aid.", x = "Response (1 = None of it, 5= All of it)", y = "Count")
+
+```
+
+# 5 Methods
+
+Below are each of the probability models used for the original simulated data and the cleaned data, respectively \[5\].
+
+$$ P(X = x) =\begin{cases}   4.4, & \text{if } x = 1 \\   20.4, & \text{if } x = 2 \\ 45.4, & \text{if } x = 3 \\ 20.4, & \text{if } x = 4 \\ 9.4, & \text{if } x = 5 \\ 0, & \text{otherwise }\end{cases} $$
+
+$$ P(X = x) =\begin{cases}   75.2, & \text{if } x = 1 \\   24.8, & \text{if } x = 0 \\   0, & \text{otherwise}\end{cases} $$
+
+The explanation for these numbers can be found in section 3.2.
+
+I will use my simulated sample to create a 95% confidence interval for the proportion of respondents that chose 3, 4, and 5 \[7\]. I will be using the following formula, where $$\hat{p} = 0.77$$ is the sample proportion, $$\ z_{0.5/2} = 1.96$$ is the critical value found via the normal distribution, and $$ n = 802 $$ is the size of our sample.
+
+$$\hat{p} \pm \ z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$$
+
+Since $$\hat{p} *n = 617.54$$ and $$(\hat{p} - 1)*n = 184.46$$ are both sufficiently large we can assume normality. Since our sample was a randomly simulaed we can assume randomness and independence \[6\].
+
+# 6 Results
+
+```{r, include = FALSE}
+
+# Here you can derive the CIs of interest based off the simulated data in a previous chunk.
+
+upper_bound <- 0.77 + 1.96*sqrt((0.77*0.33)/802)
+
+lower_bound <- 0.77 - 1.96*sqrt((0.77*0.33)/802)
+
+c(upper_bound, lower_bound)
+```
+
+|   | 95% Confidence Interval of Frequency of Response 3, 4, and 5 |
+|----|----|
+| On a scale of 1-5, how much of your child's post secondary costs do you expect to pay using loans, scholarships, bursaries, grants, and other forms of financial aid? | (0.735, 0.804) |
+
+: We are 95% confident that the true proportion of responses 3, 4, and 5 lies in the interval (0.804, 0.735). This is reasonable considering we simulated our data from a model where the total probability of these responses was 75.2, which lies in this interval \[6\].
+
+This estimate might indicate that there is a need for education about financial aid for parents and guardians transitioning their children to post-secondary.
+
+# 7 Generative AI Statement
+
+I did not use Generative AI on this assignment. I began the assignment by reading the STEMBuddies Handbook and noticed that there was not much information on financial aid resources. Then I read some journal entries and articles on financial aid and post-secondary education. I then came up with some survey questions, asked some friends and family to test my survey, and completed each section of this report \[8\]\[9\].
+
+# 8 Bibliography
+
+1.  Scott-Clayton J. Information Constraints and Financial Aid Policy. *National Bureau of Economic Research*. Published online January 1, 2012.
+
+2.  Finnie R. Student Loans, Student Financial Aid and Post-secondary Education in Canada. *Journal of Higher Education Policy and Management*. 2002;24(2):155-170. doi:https://doi.org/10.1080/136008002200013482
+
+3.  STEMBuddies. Grades 9-12: Canada’s First Comprehensive Highschool Handbook.
+
+4.  Province of Ontario. Education facts. ontario.ca. Published 2021. https://www.ontario.ca/page/education-facts
+
+5.  Korzinski D. Canadians & Class: Strong belief in Canada as a meritocracy, but plurality identify as the same social class as their parents. Angus Reid Institute. Published September 21, 2023. Accessed September 28, 2025. https://angusreid.org/great-canadian-class-study/
+
+6.  Dekking, F. M., et al. (2005) *A Modern Introduction to Probability and Statistics: Understanding why and how.* Springer Science & Business Media.
+
+7.  Watts V. 7.4 Confidence Intervals for a Population Proportion. *ecampusontariopressbookspub*. Published online September 1, 2022. https://ecampusontario.pressbooks.pub/introstats/chapter/7-4-confidence-intervals-for-a-population-proportion/
+
+8.  Harvard University. Questionnaire Design Tip Sheet. Harvard.edu. Published 2019. https://psr.iq.harvard.edu/book/questionnaire-design-tip-sheet
+
+9.  Stone N. How to Title a Survey. SmartSurvey. Published December 11, 2023. https://www.smartsurvey.co.uk/blog/how-to-title-a-survey
+
+# 9 Appendix
+
+## 9.1 Survey questions
+
+**Post-Secondary Preparation Survey**
+
+*This survey is anonymous.*
+
+*Are you a parent who is currently navigating preparing your child for post secondary education? We are trying to understand how to make financial resources more accessible and comprehensible for those looking to take advantage of them.*
+
+1.  How many dependents are in your household?
+
+    *In this case a dependent is someone financially relying on the main earner(s) in your household.*
+
+2.  What was your total household income before taxes in 2024?
+
+3.  On a scale of 1-5, how much of your child's post secondary costs do you expect to pay using loans, scholarships, bursaries, grants, and other forms of financial aid?
+
+4.  On a scale of 1-5, how well do you understand the process to apply for and receive loans, scholarships, bursaries, grants, and other forms of financial aid?
+
+5.  What questions do you have, if any, about the process of accessing loans, scholarships, bursaries, grants, and other forms of financial aid?
+
+Thank you!
+
+*Thank you for completing this survey. This will help us make financial aid more accessible to families trying to set their children up for post secondary education.*
+
+## 9.2 Simulated Survey Data
+
+Below is a `glimpse()` or `head()` of my simulated data (this should be the data that looks like the inputs from your survey).
+
+```{r, echo=TRUE}
+glimpse(sim_data)
+
+head(sim_data_clean)
+```
