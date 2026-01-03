@@ -1,2 +1,2 @@
 # surveyreport
-Repository for my STA302 Post-Secondary Preparation Survey Report
+Repository for my Post-Secondary Preparation Survey Report
